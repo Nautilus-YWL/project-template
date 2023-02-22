@@ -4,6 +4,10 @@ function(nautilus_enable_clang_tidy)
   if(NOT NAUTILUS_ENABLE_LINT)
     return()
   endif()
+  if(NOT NAUTILUS_COMPILER_IS_CLANG)
+    message(${NAUTILUS_MESSAGE_WARNING} "clang-tidy requested but compiler is not clang.")
+    return()
+  endif()
 
   find_program(CLANG_TIDY_EXE clang-tidy)
   if(NOT CLANG_TIDY_EXE)
@@ -16,9 +20,9 @@ function(nautilus_enable_clang_tidy)
     list(APPEND lint_command -warnings-as-errors=*)
   endif()
   set(CMAKE_C_CLANG_TIDY   ${lint_command}
-    CACHE FILEPATH "C compiler clang-tidy used" FORCE)
+    CACHE STRING "C compiler clang-tidy used" FORCE)
   set(CMAKE_CXX_CLANG_TIDY ${lint_command}
-    CACHE FILEPATH "CXX compiler clang-tidy used" FORCE)
+    CACHE STRING "CXX compiler clang-tidy used" FORCE)
 endfunction()
 
 function(nautilus_enable_iwyu)
@@ -32,8 +36,9 @@ function(nautilus_enable_iwyu)
     return()
   endif()
 
-  set(CMAKE_C_INCLUDE_WHAT_YOU_USE   ${INCLUDE_WHAT_YOU_USE_EXE}
-    CACHE FILEPATH "C compiler include-what-you-use used" FORCE)
-  set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE ${INCLUDE_WHAT_YOU_USE_EXE}
-    CACHE FILEPATH "C compiler include-what-you-use used" FORCE)
+  set(lint_command ${INCLUDE_WHAT_YOU_USE_EXE})
+  set(CMAKE_C_INCLUDE_WHAT_YOU_USE   ${lint_command}
+    CACHE STRING "C compiler include-what-you-use used" FORCE)
+  set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE ${lint_command}
+    CACHE STRING "CXX compiler include-what-you-use used" FORCE)
 endfunction()
