@@ -15,6 +15,12 @@ if(CMAKE_BUILD_TYPE STREQUAL "")
     )
 endif()
 
+set(NAUTILUS_STDLIB_INCLUDEDIRS ""
+  CACHE STRING "Specify header directories of stdlib, must be specify if not use default")
+# e.g.
+#   stdcxx: /usr/include/c++/7;/usr/include/x86_64-linux-gnu/c++/7
+#   cxx: /usr/lib/llvm-15/include/c++/v1
+
 set(NAUTILUS_USE_SANITIZER ""
   CACHE STRING "Build with sanitizers, e.g. `Address;Undefined'.")
 
@@ -75,6 +81,8 @@ option(NAUTILUS_LINK_STATIC "Statically link 3rdpatry libraries." OFF)
 
 # definition
 
+# learn more about platform at https://github.com/Kitware/CMake/blob/master/Modules/CMakePlatformId.h.in
+
 if(MSVC)
   set(NAUTILUS_COMPILER_IS_MSVC ON CACHE BOOL "Compiler is MSVC" FORCE)
 elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
@@ -108,6 +116,12 @@ endif()
 
 if(NAUTILUS_BUILD_SHARED)
   set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+endif()
+
+if(NAUTILUS_USE_STDLIB AND NAUTILUS_STDLIB_INCLUDEDIRS STREQUAL "")
+  message(FATAL_ERROR "Must specify header directory of stdlib if don't use default stdlib")
+elseif(NOT NAUTILUS_USE_STDLIB)
+  set(NAUTILUS_STDLIB_INCLUDEDIRS "" CACHE STRING "Don't specify header dir when use default stdlib." FORCE)
 endif()
 
 if(NOT PROJECT_IS_TOP_LEVEL)

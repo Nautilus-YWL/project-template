@@ -19,14 +19,21 @@ else()
   list(APPEND NAUTILUS_LINK_OPTIONS_COMMON
     $<$<BOOL:${NAUTILUS_USE_LINKER}>:-fuse-ld=${NAUTILUS_USE_LINKER}>
     )
+  if(NAUTILUS_USE_STDLIB)
+    list(APPEND NAUTILUS_LINK_OPTIONS_COMMON
+      -nodefaultlibs
+      -lm
+      -lc
+      $<$<PLATFORM_ID:Linux>:-lgcc_s\;-lgcc>
+      $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<STREQUAL:${NAUTILUS_USE_STDLIB},cxx>>:-lc++\;-lc++abi\;-lsupc++>
+      $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<STREQUAL:${NAUTILUS_USE_STDLIB},stdcxx>>:-lstdc++>
+      )
+  endif()
   if(NAUTILUS_COMPILER_IS_GCC)
     list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
       # $<$<BOOL:${NAUTILUS_ENABLE_COVERAGE}>:-fprofile-arcs\;-ftest-coverage>
       )
   elseif(NAUTILUS_COMPILER_IS_CLANG)
-    list(APPEND NAUTILUS_LINK_OPTIONS_COMMON
-      $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<STREQUAL:${NAUTILUS_USE_STDLIB},cxx>>:-stdlib=libc++\;-lc++abi>
-      )
     list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
       # $<$<BOOL:${NAUTILUS_ENABLE_COVERAGE}>:-fprofile-instr-generate\;-fcoverage-mapping>
       )

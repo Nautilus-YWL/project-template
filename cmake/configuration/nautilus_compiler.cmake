@@ -33,7 +33,11 @@ else()
     -Wall
     $<$<BOOL:${NAUTILUS_WARNINGS_AS_ERRORS}>:-Werror>
     $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti> # Disable RTTI
+    $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<NOT:$<STREQUAL:${NAUTILUS_USE_STDLIB},>>>:-nostdinc++>
     )
+  foreach(dir IN LISTS NAUTILUS_STDLIB_INCLUDEDIRS)
+    list(APPEND NAUTILUS_COMPILE_OPTIONS_COMMON -isystem${dir})
+  endforeach()
   list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
     -fno-inline
     -pedantic
@@ -68,6 +72,7 @@ else()
     list(APPEND NAUTILUS_COMPILE_OPTIONS_COMMON
       -finput-charset=UTF-8
       $<$<COMPILE_LANGUAGE:CXX>:-Wthread-safety>
+      # $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<STREQUAL:${NAUTILUS_USE_STDLIB},cxx>>:-stdlib=libc++>
       # $<$<BOOL:${NAUTILUS_ENABLE_COVERAGE}>:-fprofile-instr-generate\;-fcoverage-mapping>
       )
     list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
