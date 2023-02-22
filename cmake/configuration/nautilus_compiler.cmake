@@ -9,15 +9,23 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(NAUTILUS_COMPILE_DEFINITIONS_COMMON)
+set(NAUTILUS_COMPILE_DEFINITIONS_DEVELOP)
+set(NAUTILUS_COMPILE_DEFINITIONS_RELEASE)
+set(NAUTILUS_COMPILE_OPTIONS_COMMON)
+set(NAUTILUS_COMPILE_OPTIONS_DEVELOP)
+set(NAUTILUS_COMPILE_OPTIONS_RELEASE)
+
 if(NAUTILUS_COMPILER_IS_MSVC)
-  add_compile_definitions(
+  list(APPEND NAUTILUS_COMPILE_DEFINITIONS_COMMON
     _CRT_SECURE_NO_WARNINGS
     _SCL_SECURE_NO_WARNINGS
     NOMINMAX # disable min/max problem in windows.h
     )
-  add_compile_options(
+  list(APPEND NAUTILUS_COMPILE_OPTIONS_COMMON
     /W3
     /Wall
+    /permissive-
     /source-charset:utf-8
     /volatile:iso # Specifies how the volatile keyword is to be interpreted.
     /wd4996 # Compiler Warning (level 3) C4996
@@ -26,8 +34,16 @@ if(NAUTILUS_COMPILER_IS_MSVC)
     $<$<AND:$<BOOL:${NAUTILUS_WARNINGS_AS_ERRORS}>,$<VERSION_GREATER:MSVC_VERSION,1900>>:/WX>
     )
 else()
-  set(NAUTILUS_COMPILE_OPTIONS_DEBUG
+  list(APPEND NAUTILUS_COMPILE_OPTIONS_COMMON
+    -fno-stack-protector
+    -fno-common
+    -Wall
+    $<$<BOOL:${NAUTILUS_WARNINGS_AS_ERRORS}>:-Werror>
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti> # Disable RTTI
+    )
+  list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
     -fno-inline
+    -pedantic
     # from lua Makefile
     -Wdisabled-optimization
     -Wdouble-promotion
@@ -39,34 +55,48 @@ else()
     -Wundef
     # -Wfatal-errors
     )
-  add_compile_options(
-    -fno-stack-protector
-    -fno-common
-    -Wall
+  list(APPEND NAUTILUS_COMPILE_OPTION_RELEASE
     -march=native
-    $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti> # Disable RTTI
-    "$<$<CONFIG:DEBUG>:${NAUTILUS_COMPILE_OPTIONS_DEBUG}>"
-    $<$<BOOL:${NAUTILUS_WARNINGS_AS_ERRORS}>:-Werror>
     )
   if(NAUTILUS_COMPILER_IS_GCC)
     # GNU Compiler Collection
-    add_compile_options(
+    # Learn more at https://gcc.gnu.org/onlinedocs/gcc/Invoking-GCC.html
+    list(APPEND NAUTILUS_COMPILE_OPTIONS_COMMON
       -finput-charset=UTF8
-      -Wa,-mbig-obj
-      $<$<CONFIG:DEBUG>:-fmax-errors=5>
-      $<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics\;-fmerge-all-constants>
+      "$<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics\;-fmerge-all-constants>"
       # $<$<BOOL:${NAUTILUS_ENABLE_COVERAGE}>:-fprofile-arcs\;-ftest-coverage>
+      )
+    list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
+      -fmax-errors=5
       )
   elseif(NAUTILUS_COMPILER_IS_CLANG)
     # Clang
-    add_compile_options(
+    # Learn more at https://clang.llvm.org/docs/UsersManual.html
+    list(APPEND NAUTILUS_COMPILE_OPTIONS_COMMON
       -finput-charset=UTF-8
-      $<$<CONFIG:DEBUG>:-ferror-limit=5>
       $<$<COMPILE_LANGUAGE:CXX>:-Wthread-safety>
-      $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<STREQUAL:${NAUTILUS_USE_STDLIB},"cxx">>:-stdlib=libc++>
       # $<$<BOOL:${NAUTILUS_ENABLE_COVERAGE}>:-fprofile-instr-generate\;-fcoverage-mapping>
+      )
+    list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
+      -ferror-limit=5
       )
   else()
     message(${NAUTILUS_MESSAGE_WARNING} "Unknow compiler ${CMAKE_CXX_COMPILER_ID}.")
   endif()
 endif()
+
+add_compile_definitions(
+  ${NAUTILUS_COMPILE_DEFINITIONS_COMMON}
+  "$<IF:$<CONFIG:RELEASE>,${NAUTILUS_COMPILE_DEFINITIONS_RELEASE},${NAUTILUS_COMPILE_DEFINITIONS_DEVELOP}>"
+  )
+add_compile_options(
+  ${NAUTILUS_COMPILE_OPTIONS_COMMON}
+  "$<IF:$<CONFIG:RELEASE>,${NAUTILUS_COMPILE_OPTIONS_RELEASE},${NAUTILUS_COMPILE_OPTIONS_DEVELOP}>"
+  )
+
+unset(NAUTILUS_COMPILE_DEFINITIONS_COMMON)
+unset(NAUTILUS_COMPILE_DEFINITIONS_DEVELOP)
+unset(NAUTILUS_COMPILE_DEFINITIONS_RELEASE)
+unset(NAUTILUS_COMPILE_OPTIONS_COMMON)
+unset(NAUTILUS_COMPILE_OPTIONS_DEVELOP)
+unset(NAUTILUS_COMPILE_OPTIONS_RELEASE)
