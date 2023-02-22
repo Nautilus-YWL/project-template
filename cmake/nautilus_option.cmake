@@ -106,6 +106,7 @@ endif()
 # override
 
 if(NAUTILUS_BUILD_RELEASE)
+  set(NAUTILUS_USE_SANITIZER "" CACHE STRING "Disable sanitizers override by build release." FORCE)
   set(NAUTILUS_ENABLE_IPO ON CACHE BOOL "Enable IPO override by build release." FORCE)
   set(NAUTILUS_ENABLE_PCH ON CACHE BOOL "Enable PCH override by build release." FORCE)
   set(NAUTILUS_ENABLE_LINT OFF CACHE BOOL "Disable code check override by build release." FORCE)
@@ -117,6 +118,7 @@ if(NAUTILUS_BUILD_SHARED)
 endif()
 
 if(NOT PROJECT_IS_TOP_LEVEL)
+  set(NAUTILUS_USE_SANITIZER "" CACHE STRING "Disable sanitizers when project is submodule." FORCE)
   set(NAUTILUS_BUILD_TESTS OFF CACHE BOOL "Build tests override when project is submodule." FORCE)
   set(NAUTILUS_BUILD_TOOLS OFF CACHE BOOL "Build tools override when project is submodule." FORCE)
   set(NAUTILUS_ENABLE_COVERAGE OFF CACHE BOOL "Build coverage override when project is submodule." FORCE)
@@ -125,6 +127,6 @@ elseif(NAUTILUS_BUILD_TESTS)
   set(NAUTILUS_BUILD_TOOLS ON CACHE BOOL "Build tools override by NAUTILUS_BUILD_TESTS." FORCE)
   set(NAUTILUS_ENABLE_COVERAGE "$<IF:$<BOOL:${NAUTILUS_BUILD_RELEASE}>,ON,OFF>"
     CACHE BOOL "Build coverage override by NAUTILUS_BUILD_TESTS." FORCE)
-elseif(NAUTILUS_ENABLE_COVERAGE)
+elseif(NAUTILUS_ENABLE_COVERAGE) # Not build tests, disable coverage
   set(NAUTILUS_ENABLE_COVERAGE OFF CACHE BOOL "Disable code coverage override by NAUTILUS_BUILD_TESTS." FORCE)
 endif()
