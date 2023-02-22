@@ -6,5 +6,10 @@ project(nautilus
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
+include(nautilus_configuration)
+include(nautilus_option)
+include(nautilus_policy)
+include(nautilus_tools)
+
 add_subdirectory(src)
 add_subdirectory(test)
