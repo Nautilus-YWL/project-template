@@ -5,9 +5,9 @@ foreach(sanitizer IN LISTS NAUTILUS_USE_SANITIZER)
   if(sanitizer STREQUAL "Address")
     # Learn more at https://github.com/google/sanitizers/wiki/AddressSanitizer
     list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
-      "$<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=address,-fsanitize=address\;-fsanitize-address-use-after-scope>")
+      $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=address,-fsanitize=address\;-fsanitize-address-use-after-scope>)
     list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
-      "$<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=address,-fsanitize=address>")
+      $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=address,-fsanitize=address>)
     set(NAUTILUS_ADDED_SANITIZER ON)
   elseif(sanitizer MATCHES "Memory(WithOrigins)?")
     # Learn more at https://github.com/google/sanitizers/wiki/MemorySanitizer
@@ -18,9 +18,9 @@ foreach(sanitizer IN LISTS NAUTILUS_USE_SANITIZER)
         "Memory sanitizer does not work with Address, Leak and Thread sanitizer enabled")
     elseif(NOT NAUTILUS_COMPILER_IS_GCC)
       list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
-        "$<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=memory,-fsanitize=memory>")
+        $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=memory,-fsanitize=memory>)
       list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
-        "$<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=memory,-fsanitize=memory>")
+        $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=memory,-fsanitize=memory>)
       if(NAUTILUS_COMPILER_IS_CLANG AND sanitizer STREQUAL "MemoryWithOrigins")
         list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP -fsanitize-memory-track-origins)
         list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP -fsanitize-memory-track-origins)
@@ -30,10 +30,10 @@ foreach(sanitizer IN LISTS NAUTILUS_USE_SANITIZER)
   elseif(sanitizer MATCHES "Undefined")
     # Learn more at https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
     list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
-      "$<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=undefined,-fsanitize=undefined>"
-      "$<$<AND:$<COMPILE_LANGUAGE:CXX>,$<NOT:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>>>:-fno-sanitize=vptr>")
+      $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=undefined,-fsanitize=undefined>
+      $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<NOT:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>>>:-fno-sanitize=vptr>)
     list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
-      "$<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=undefined,-fsanitize=undefined>")
+      $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=undefined,-fsanitize=undefined>)
     set(NAUTILUS_ADDED_SANITIZER ON)
   elseif(sanitizer MATCHES "Thread")
     # Learn more at https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual
@@ -45,17 +45,17 @@ foreach(sanitizer IN LISTS NAUTILUS_USE_SANITIZER)
         "Thread sanitizer does not work with Address, Leak and Memory sanitizer enabled")
     else()
       list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
-        "$<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=thread\;/O1,-fsanitize=thread\;-O1>")
+        $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=thread\;/O1,-fsanitize=thread\;-O1>)
       list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
-        "$<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=thread,-fsanitize=thread>")
+        $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=thread,-fsanitize=thread>)
       set(NAUTILUS_ADDED_SANITIZER ON)
     endif()
   elseif(sanitizer MATCHES "Leak")
     # Learn more at https://github.com/google/sanitizers/wiki/AddressSanitizerLeakSanitizer
     list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
-      "$<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=leak,-fsanitize=leak>")
+      $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=leak,-fsanitize=leak>)
     list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
-      "$<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=leak,-fsanitize=leak>")
+      $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=leak,-fsanitize=leak>)
     set(NAUTILUS_ADDED_SANITIZER ON)
   else()
     message(${NAUTILUS_MESSAGE_WARNING}

@@ -17,7 +17,7 @@ endfunction()
 if(NAUTILUS_COMPILER_IS_MSVC)
 else()
   list(APPEND NAUTILUS_LINK_OPTIONS_COMMON
-    "$<$<BOOL:${NAUTILUS_USE_LINKER}>:-fuse-ld=${NAUTILUS_USE_LINKER}>"
+    $<$<BOOL:${NAUTILUS_USE_LINKER}>:-fuse-ld=${NAUTILUS_USE_LINKER}>
     )
   if(NAUTILUS_COMPILER_IS_GCC)
     list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
@@ -25,7 +25,7 @@ else()
       )
   elseif(NAUTILUS_COMPILER_IS_CLANG)
     list(APPEND NAUTILUS_LINK_OPTIONS_COMMON
-      "$<$<AND:$<COMPILE_LANGUAGE:CXX>,$<STREQUAL:${NAUTILUS_USE_STDLIB},cxx>>:-stdlib=libc++\;-lc++abi>"
+      $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<STREQUAL:${NAUTILUS_USE_STDLIB},cxx>>:-stdlib=libc++\;-lc++abi>
       )
     list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
       # $<$<BOOL:${NAUTILUS_ENABLE_COVERAGE}>:-fprofile-instr-generate\;-fcoverage-mapping>

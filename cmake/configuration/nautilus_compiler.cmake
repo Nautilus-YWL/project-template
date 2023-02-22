@@ -56,7 +56,7 @@ else()
     # Learn more at https://gcc.gnu.org/onlinedocs/gcc/Invoking-GCC.html
     list(APPEND NAUTILUS_COMPILE_OPTIONS_COMMON
       -finput-charset=UTF8
-      "$<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics\;-fmerge-all-constants>"
+      $<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics\;-fmerge-all-constants>
       # $<$<BOOL:${NAUTILUS_ENABLE_COVERAGE}>:-fprofile-arcs\;-ftest-coverage>
       )
     list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
