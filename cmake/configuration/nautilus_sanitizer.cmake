@@ -7,6 +7,7 @@ foreach(sanitizer IN LISTS NAUTILUS_USE_SANITIZER)
     list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
       $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=address,-fsanitize=address\;-fsanitize-address-use-after-scope>)
     list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
+      $<$<NOT:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>>:-lasan>
       $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=address,-fsanitize=address>)
     set(NAUTILUS_ADDED_SANITIZER ON)
   elseif(sanitizer MATCHES "Memory(WithOrigins)?")
@@ -33,6 +34,7 @@ foreach(sanitizer IN LISTS NAUTILUS_USE_SANITIZER)
       $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=undefined,-fsanitize=undefined>
       $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<NOT:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>>>:-fno-sanitize=vptr>)
     list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
+      $<$<NOT:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>>:-lubsan>
       $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=undefined,-fsanitize=undefined>)
     set(NAUTILUS_ADDED_SANITIZER ON)
   elseif(sanitizer MATCHES "Thread")
@@ -47,6 +49,7 @@ foreach(sanitizer IN LISTS NAUTILUS_USE_SANITIZER)
       list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
         $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=thread\;/O1,-fsanitize=thread\;-O1>)
       list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
+        $<$<NOT:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>>:-ltsan>
         $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=thread,-fsanitize=thread>)
       set(NAUTILUS_ADDED_SANITIZER ON)
     endif()
@@ -55,6 +58,7 @@ foreach(sanitizer IN LISTS NAUTILUS_USE_SANITIZER)
     list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
       $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=leak,-fsanitize=leak>)
     list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
+      $<$<NOT:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>>:-ltsan>
       $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=leak,-fsanitize=leak>)
     set(NAUTILUS_ADDED_SANITIZER ON)
   else()
