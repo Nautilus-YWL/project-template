@@ -72,7 +72,6 @@ else()
     list(APPEND NAUTILUS_COMPILE_OPTIONS_COMMON
       -finput-charset=UTF-8
       $<$<COMPILE_LANGUAGE:CXX>:-Wthread-safety>
-      # $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<STREQUAL:${NAUTILUS_USE_STDLIB},cxx>>:-stdlib=libc++>
       # $<$<BOOL:${NAUTILUS_ENABLE_COVERAGE}>:-fprofile-instr-generate\;-fcoverage-mapping>
       )
     list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP

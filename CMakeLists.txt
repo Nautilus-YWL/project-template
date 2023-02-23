@@ -18,11 +18,5 @@ include(nautilus_option)
 include(nautilus_policy)
 include(nautilus_tool)
 
-if(PROJECT_IS_TOP_LEVEL)
-  message(STATUS "PROJECT_IS_TOP_LEVEL")
-else()
-  message(STATUS "PROJECT_IS_NOT_TOP_LEVEL")
-endif()
-
 add_subdirectory(src)
 add_subdirectory(test)

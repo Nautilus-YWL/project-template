@@ -58,7 +58,7 @@ foreach(sanitizer IN LISTS NAUTILUS_USE_SANITIZER)
     list(APPEND NAUTILUS_COMPILE_OPTIONS_DEVELOP
       $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=leak,-fsanitize=leak>)
     list(APPEND NAUTILUS_LINK_OPTIONS_DEVELOP
-      $<$<NOT:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>>:-ltsan>
+      $<$<NOT:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>>:-llsan>
       $<IF:$<BOOL:${NAUTILUS_COMPILER_IS_MSVC}>,/fsanitize=leak,-fsanitize=leak>)
     set(NAUTILUS_ADDED_SANITIZER ON)
   else()
