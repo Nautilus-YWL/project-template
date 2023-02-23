@@ -25,3 +25,5 @@ include(nautilus_precompile_header)
 if(NAUTILUS_USE_SANITIZER)
   include(nautilus_sanitizer)
 endif()
+
+list(REMOVE_AT CMAKE_MODULE_PATH -1)

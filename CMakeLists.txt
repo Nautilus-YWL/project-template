@@ -19,5 +19,7 @@ include(nautilus_platform)
 include(nautilus_policy)
 include(nautilus_tool)
 
+list(REMOVE_AT CMAKE_MODULE_PATH -1)
+
 add_subdirectory(src)
 add_subdirectory(test)

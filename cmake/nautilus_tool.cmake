@@ -9,3 +9,5 @@ include(nautilus_cache)
 if(NAUTILUS_ENABLE_DOXYGEN)
   include(nautilus_doxygen)
 endif()
+
+list(REMOVE_AT CMAKE_MODULE_PATH -1)
