@@ -132,8 +132,11 @@ if(NOT PROJECT_IS_TOP_LEVEL)
   set(NAUTILUS_ENABLE_LINT OFF CACHE BOOL "Disable code check override when project is submodule." FORCE)
 elseif(NAUTILUS_BUILD_TESTS)
   set(NAUTILUS_BUILD_TOOLS ON CACHE BOOL "Build tools override by NAUTILUS_BUILD_TESTS." FORCE)
-  set(NAUTILUS_ENABLE_COVERAGE "$<IF:$<BOOL:${NAUTILUS_BUILD_RELEASE}>,OFF,ON>"
-    CACHE BOOL "Build coverage override by NAUTILUS_BUILD_TESTS." FORCE)
+  if(NAUTILUS_BUILD_RELEASE)
+    set(NAUTILUS_ENABLE_COVERAGE OFF CACHE BOOL "Build coverage override by NAUTILUS_BUILD_TESTS." FORCE)
+  else()
+    set(NAUTILUS_ENABLE_COVERAGE ON CACHE BOOL "Build coverage override by NAUTILUS_BUILD_TESTS." FORCE)
+  endif()
 elseif(NAUTILUS_ENABLE_COVERAGE) # Not build tests, disable coverage
   set(NAUTILUS_ENABLE_COVERAGE OFF CACHE BOOL "Disable code coverage override by NAUTILUS_BUILD_TESTS." FORCE)
 endif()
