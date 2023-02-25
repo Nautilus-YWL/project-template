@@ -1,0 +1,45 @@
+.git*            export-ignore
+.editorconfig    export-ignore
+
+
+######################### C #########################
+*.c     text eol=lf diff=c encoding
+*.h     text eol=lf diff=c encoding
+
+
+######################### C++ #########################
+*.cc    text eol=lf diff=cpp encoding
+*.cxx   text eol=lf diff=cpp encoding
+*.cpp   text eol=lf diff=cpp encoding
+*.c++   text eol=lf diff=cpp encoding
+*.hh    text eol=lf diff=cpp encoding
+*.hxx   test eol=lf diff=cpp encoding
+*.hpp   text eol=lf diff=cpp encoding
+*.h++   text eol=lf diff=cpp encoding
+*.tcc   text eol=lf diff=cpp encoding
+
+
+######################### CMake #########################
+*.cmake        text eol=lf encoding
+CMakeLists.txt text eol=lf encoding
+
+
+######################### VisualStudio #########################
+*.sln        text eol=crlf
+*.csproj     text eol=crlf
+*.vbproj     text eol=crlf
+*.vcxproj    text eol=crlf
+*.vcproj     text eol=crlf
+*.dbproj     text eol=crlf
+*.fsproj     text eol=crlf
+*.lsproj     text eol=crlf
+*.wixproj    text eol=crlf
+*.modelproj  text eol=crlf
+*.sqlproj    text eol=crlf
+*.wwaproj    text eol=crlf
+
+*.xproj      text eol=crlf
+*.props      text eol=crlf
+*.filters    text eol=crlf
+*.vcxitems   text eol=crlf
+*.manifest   text eol=crlf

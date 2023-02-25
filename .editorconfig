@@ -1,0 +1,50 @@
+root = true
+
+[*]
+charset = utf-8
+curly_bracket_next_line = false
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+max_line_length = 80
+quote_type = double
+spaces_around_operators = true
+tab_width = 4
+trim_trailing_whitespace = true
+
+[*.{bat,cmd}]
+end_of_line = crlf
+indent_size = 4
+max_line_length = 120
+
+[*.{c,h}]
+indent_size = 8
+
+[{CMakeLists.txt,*.cmake,*.rst}]
+max_line_length = 120
+
+[{Makefile,*.{go,mk}}]
+indent_style = tab
+max_line_length = 120
+
+[*.{md,markdown}]
+indent_size = 2
+max_line_length = 120
+trim_trailing_whitespace = false
+
+[*.ps1]
+end_of_line = crlf
+indent_size = 4
+max_line_length = 120
+
+[*.{py,rs}]
+indent_size = 4
+
+[*.sh]
+indent_size = 4
+max_line_length = 120
+
+[*.{sln,vcxproj,vcproj,xproj,props,vcxitems,manifest}]
+charset = utf-8-bom
+end_of_line = crlf
