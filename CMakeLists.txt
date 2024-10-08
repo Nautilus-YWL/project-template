@@ -14,12 +14,14 @@ endif()
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 include(nautilus_configuration)
-include(nautilus_option)
-include(nautilus_platform)
-include(nautilus_policy)
+include(nautilus_definition)
 include(nautilus_tool)
 
 list(REMOVE_AT CMAKE_MODULE_PATH -1)
 
 add_subdirectory(src)
-add_subdirectory(test)
+
+enable_testing()
+if(NAUTILUS_BUILD_TESTS)
+  add_subdirectory(test)
+endif()
