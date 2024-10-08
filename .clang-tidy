@@ -1,0 +1,96 @@
+---
+# check options see https://clang.llvm.org/extra/clang-tidy/checks/list.html
+
+Checks: >
+        -*,
+        boost-*,
+        bugprone-*,
+        -bugprone-argument-comment,
+        -bugprone-easily-swappable-parameters,
+        -bugprone-unsafe-functions,
+        cert-*,
+        -cert-dcl58-cpp,
+        -cert-err52-cpp,
+        -cert-err58-cpp,
+        -cert-msc50-cpp,
+        concurrency-*,
+        clang-analyzer-core.*,
+        clang-analyzer-cplusplus.*,
+        clang-analyzer-nullability.*,
+        clang-analyzer-optin.cplusplus.*,
+        clang-analyzer-optin.performance.*,
+        clang-analyzer-unix.*,
+        clang-analyzer-valist.*,
+        cppcoreguidelines-avoid-capture-default-when-capturing-this,
+        cppcoreguidelines-prefer-member-initializer,
+        cppcoreguidelines-slicing,
+        cppcoreguidelines-special-member-functions,
+        cppcoreguidelines-virtual-class-destructor,
+        google-*,
+        -google-objc-*,
+        -google-runtime-references,
+        misc-*,
+        -misc-no-recursion,
+        -misc-non-private-member-variables-in-classes,
+        modernize-*,
+        -modernize-avoid-c-arrays,
+        -modernize-deprecated-headers,
+        performance-*,
+        readability-*,
+        -readability-avoid-nested-conditional-operator,
+        -readability-convert-member-functions-to-static,
+        -readability-inconsistent-declaration-parameter-name,
+        -readability-magic-numbers,
+        -readability-suspicious-call-argument,
+        -readability-uppercase-literal-suffix,
+CheckOptions:
+  bugprone-suspicious-include.HeaderFileExtensions: ';h;hh;hpp;hxx;tcc;inc;def'
+  google-build-namespaces.HeaderFileExtensions: 'h,hh,hpp,hxx,tcc,'
+  google-global-names-in-headers.HeaderFileExtensions: 'h,hh,hpp,hxx,tcc,'
+  google-readability-namespace-comments.SpacesBeforeComments: '2'
+  google-readability-namespace-comments.ShortNamespaceLines: '8'
+  misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic: 'true'
+  misc-uniqueptr-reset-release.IncludeStyle: llvm
+  modernize-loop-convert.MaxCopySize: '8'
+  modernize-loop-convert.MinConfidence: reasonable
+  modernize-pass-by-value.IncludeStyle: llvm
+  modernize-replace-auto-ptr.IncludeStyle: llvm
+  modernize-use-emplace.IgnoreImplicitConstructors: 'true'
+  modernize-use-override.IgnoreDestructors: 'true'
+  # SEE: https://clang.llvm.org/extra/clang-tidy/checks/readability-function-cognitive-complexity.html
+  readability-function-cognitive-complexity.Threshold: '25'
+  readability-function-size.LineThreshold: '64'
+  readability-function-size.StatementThreshold: '512'
+  readability-identifier-length.MinimumVariableNameLength: '2'
+  readability-identifier-length.MinimumParameterNameLength: '2'
+  readability-identifier-naming.ClassCase: CamelCase
+  readability-identifier-naming.ClassConstantCase: lower_case
+  readability-identifier-naming.ClassMemberCase: lower_case
+  readability-identifier-naming.ClassMethodCase: lower_case
+  readability-identifier-naming.ConstantCase: CamelCase
+  readability-identifier-naming.ConstantIgnoredRegexp: '__.*'
+  readability-identifier-naming.ConstantPrefix: k
+  readability-identifier-naming.EnumCase: CamelCase
+  readability-identifier-naming.EnumConstantCase: CamelCase
+  readability-identifier-naming.EnumConstantPrefix: k
+  readability-identifier-naming.FunctionCase: lower_case
+  readability-identifier-naming.MacroDefinitionCase: UPPER_CASE
+  readability-identifier-naming.MacroDefinitionIgnoredRegexp: '__.*'
+  readability-identifier-naming.PrivateMemberSuffix: _
+  readability-identifier-naming.ProtectedMemberSuffix: _
+  readability-identifier-naming.StaticConstantCase: lower_case
+  readability-identifier-naming.StructCase: CamelCase
+  readability-identifier-naming.TemplateParameterCase: CamelCase
+  readability-identifier-naming.TypeTemplateParameterIgnoredRegexp: expr-type
+  readability-identifier-naming.TypeAliasCase: CamelCase
+  readability-identifier-naming.TypeAliasIgnoredRegexp: '^(.+_)?type$|^(.+_)?pointer$|^(.+_)?reference$|^(.+_)?iterator$'
+  readability-identifier-naming.TypedefCase: CamelCase
+  readability-identifier-naming.TypedefIgnoredRegexp: '^(.+_)?type$|^(.+_)?pointer$|^(.+_)?reference$|^(.+_)?iterator$'
+  readability-identifier-naming.VariableCase: lower_case
+  readability-identifier-naming.VariableIgnoredRegexp: '__.*'
+  readability-implicit-bool-conversion.AllowIntegerConditions: 'true'
+  readability-implicit-bool-conversion.AllowPointerConditions: 'true'
+FormatStyle: none
+HeaderFilterRegex: '.*'
+WarningsAsErrors: ''
+...

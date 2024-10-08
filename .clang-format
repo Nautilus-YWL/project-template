@@ -1,0 +1,38 @@
+---
+Language: Cpp
+BasedOnStyle: LLVM
+DisableFormat: false
+AccessModifierOffset: -1
+AlignArrayOfStructures: Right
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortCompoundRequirementOnASingleLine: true
+AlwaysBreakTemplateDeclarations: MultiLine
+BreakConstructorInitializers: BeforeColon
+BreakInheritanceList: BeforeComma
+BreakTemplateDeclarations: MultiLine
+EmptyLineBeforeAccessModifier: Always
+IncludeBlocks: Regroup
+IndentCaseLabels: false
+InsertBraces: true
+InsertNewlineAtEOF: true
+IntegerLiteralSeparator:
+  Binary: 4
+  Decimal: 3
+  Hex: 4
+KeepEmptyLines:
+  AtEndOfFile: false
+  AtStartOfBlock: false
+  AtStartOfFile: false
+KeepEmptyLinesAtEOF: false
+KeepEmptyLinesAtTheStartOfBlocks: false
+LineEnding: LF
+PointerAlignment: Left
+QualifierAlignment: Custom
+QualifierOrder: ['inline', 'static', 'constexpr', 'type', 'const', 'volatile']
+RequiresClausePosition: OwnLine
+RequiresExpressionIndentation: OuterScope
+ShortNamespaceLines: 8
+SpacesBeforeTrailingComments: 2
+UseCRLF: false
+UseTab: Never
+...
